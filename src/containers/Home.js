@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import Header from '../components/Header'
 
 import Main from './Main';
 import Catalog from './Catalog';
 
-console.dir(Main)
-
-const Home = () => (
-  <Main>
+const StoreFront = () => (
+  <React.Fragment>
     <Header />
     <Catalog />
-  </Main>
-);
+  </React.Fragment>
+)
+
+class Home extends Component {
+  render() {
+    return (
+      <Main children={
+        <StoreFront />
+      } />
+    )
+  }
+}
+
 
 export default Home;

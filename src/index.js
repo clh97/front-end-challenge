@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 
 import Home from './containers/Home';
 
-const root = document.querySelector('#root');
+const root = document.getElementById('root');
 
 ReactDOM.render(
-  React.createElement(Home),
+  <Home />,
   root,
 );
 
-// module.hot.accept();
+module.hot.accept();

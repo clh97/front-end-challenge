@@ -4,14 +4,24 @@ import styled from 'styled-components';
 // eslint-disable-next-line import/no-unresolved
 import { media } from '../config/constants';
 
-const Header = styled.header`
+const HeaderComponent = styled.header`
   width: 100vw;
   height: 10vh;
   
-  ${media.mobile`background: red;`}
-  ${media.tablet`background: blue;`}
-  ${media.desktop`background: green;`}
-
+  ${media.ultra`background: rebeccapurple;`}
+  ${media.desktop`background: dodgerblue;`}
+  ${media.tablet`background: mediumseagreen;`}
+  ${media.phone`background: palevioletred;`}
 `;
 
+const Header = () => {
+
+  return (
+    <HeaderComponent>
+      
+    </HeaderComponent>
+  )
+}
+
+// export default () => <header>teste</header>;
 export default () => <Header />;

@@ -18,8 +18,8 @@ export default class Main extends Component {
 
     return (
       <main>
-        
+        {this.props.children}
       </main>
-    );
+    )
   }
 }
