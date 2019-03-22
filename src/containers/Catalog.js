@@ -9,7 +9,7 @@ import Product from '../components/Product';
 const CatalogContainer = styled.section`
   
   padding: 1rem;
-  
+  background-color: #f1f1f1;
 `
 
 export default class Catalog extends Component {
