@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { media } from '../config/constants';
 
 // article or div? *thoughtful*
 const ProductContainer = styled.article`
@@ -7,6 +8,11 @@ const ProductContainer = styled.article`
   width: calc(50% - 1rem);
   margin: .5rem;
   vertical-align: top;
+
+  ${media.ultra`max-width: calc(100% / 4 - 1rem);`}
+  ${media.desktop`max-width: 480px;`}
+  ${media.tablet`max-width: 320px;`}
+  ${media.phone`max-width: 320px;`}
 `
 const ProductImage = styled.img`
   max-width: 100%;
@@ -48,6 +54,7 @@ const PriceText = styled.span`
   font-size: ${({ sale }) => sale ? '.8rem' : '1rem'};
   font-weight: ${({ bold }) => bold && 'bold'};
 `
+
 
 const placeholderImage = 'https://placekitten.com/g/470/594'
 export default class Product extends Component {

@@ -1,19 +1,40 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { media } from '../config/constants';
 import products from '../products.json';
 
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import Product from '../components/Product';
 
-const CatalogContainer = styled.section`
-  
+const CatalogContainer = styled.section` 
+  display: inline-block;
   padding: 1rem;
   background-color: #f1f1f1;
+
+  ${
+    media.ultra`
+      width: calc(100% - 320px);
+      background: rebeccapurple;
+  `}
+  ${
+    media.desktop`
+      width: calc(100% - 320px);
+      background: dodgerblue;
+  `}
+  ${
+    media.tablet`
+      width: 100%;
+      background: mediumseagreen;
+  `}
+  ${
+    media.phone`
+      width: 100%;
+      background: palevioletred;
+  `}
 `
 
 export default class Catalog extends Component {
-
   state = {
     error: undefined,
     products: undefined,
