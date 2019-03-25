@@ -8,17 +8,25 @@ const HeaderComponent = styled.header`
   width: 100vw;
   height: 10vh;
   
-  ${media.ultra`background: rebeccapurple;`}
-  ${media.desktop`background: dodgerblue;`}
-  ${media.tablet`background: mediumseagreen;`}
-  ${media.phone`background: palevioletred;`}
+  ${media.ultra`
+    
+  `}
+  ${media.desktop`
+    
+  `}
+  ${media.tablet`
+    
+  `}
+  ${media.phone`
+    
+  `}
 `;
 
 const Header = () => {
 
   return (
     <HeaderComponent>
-      
+      header
     </HeaderComponent>
   )
 }

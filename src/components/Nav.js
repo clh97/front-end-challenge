@@ -10,30 +10,31 @@ const NavComponent = styled.nav`
   vertical-align: top;
 
   ${
-    media.ultra`background: rebeccapurple;
+    media.ultra`
+
   `}
   ${
-    media.desktop`background: dodgerblue;
+    media.desktop`
+
   `}
   ${
     media.tablet`
       display: block;
       width: 100%;
-      height: 320px;
-      background: mediumseagreen;
+      height: 15vh;
   `}
   ${
     media.phone`
       display: block;
       width: 100%;
-      height: 320px;
-      background: mediumseagreen;
+      height: 15vh;
   `}
 `;
 
 const Nav = (props) => {
   return (
     <NavComponent>
+      nav
       {props.children}
     </NavComponent>
   )

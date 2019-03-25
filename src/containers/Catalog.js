@@ -15,22 +15,18 @@ const CatalogContainer = styled.section`
   ${
     media.ultra`
       width: calc(100% - 320px);
-      background: rebeccapurple;
   `}
   ${
     media.desktop`
       width: calc(100% - 320px);
-      background: dodgerblue;
   `}
   ${
     media.tablet`
       width: 100%;
-      background: mediumseagreen;
   `}
   ${
     media.phone`
       width: 100%;
-      background: palevioletred;
   `}
 `
 
