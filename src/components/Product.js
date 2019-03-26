@@ -1,6 +1,89 @@
-import React, { Component } from 'react';
+import React, { PureComponent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { media } from '../config/constants';
+import { connect } from 'react-redux'
+import redux, { addToCart } from '../redux';
+
+const placeholderImage = 'https://placekitten.com/g/470/594'
+class Product extends PureComponent {
+
+  state = {
+    selected_size: undefined,
+    error: undefined
+  }
+
+  render() {
+    return (
+      <ProductContainer discount={parseInt(this.props.product.discount_percentage)}>
+        <ProductImage src={this.validateImage(this.props.product.image) ? this.props.product.image : placeholderImage} alt={this.props.product.name} />
+        <ProductName>{this.props.product.name}</ProductName>
+        <Sizes onChangeSize={this.onChangeSize} {...this.props.product} />
+        <Prices {...this.props.product} />
+        <CartButton onClick={() => this.addProduct(this.props.product)}>add to cart</CartButton>
+      </ProductContainer>
+    )
+  }
+
+  addProduct = product => {
+
+    const { selected_size } = this.state;
+
+    if(!selected_size) {
+      alert('you must select a size first!')
+      return;
+    }
+
+    const newProduct = {
+      ...product,
+      selected_size
+    }
+
+    this.props.addToCart(newProduct)
+  }
+
+  onChangeSize = selected_size => {
+    this.setState({
+      selected_size
+    })
+  }
+
+  validateImage = url => {
+    return url.match(/^https?:\/\//) !== null
+  }
+}
+
+const Sizes = props => {
+  const [ size, sizeSelector ] = useState(undefined);
+
+  useEffect(() => {
+    size && props.onChangeSize(size)
+  })
+
+  return (
+  <SizeBar sizes={props.sizes}>
+    {
+      props.sizes.map(s => (
+        <SizeBarItem selected={size == s.size} onClick={() => sizeSelector(s.size)} key={s.sku} {...s}>
+          {s.size}
+        </SizeBarItem>
+      ))
+    }
+  </SizeBar>
+)}
+
+const Prices = props => (
+  <PriceContainer>
+    <PriceText sale={props.on_sale}>
+      {props.regular_price}
+    </PriceText>
+    {
+      props.on_sale &&
+      <PriceText bold={true}>
+        {props.actual_price}
+      </PriceText>
+    }
+  </PriceContainer>
+)
 
 // article or div? *thoughtful*
 const ProductContainer = styled.article`
@@ -25,6 +108,11 @@ const ProductContainer = styled.article`
       padding: .2rem;
       color: #f1f1f1;
       transform: rotate(-45deg);
+      transition: transform .25s ease-in-out;
+    }
+
+    &:hover:before {
+      transform: scale(1.25) rotate(-45deg);
     }
   ` }
 `
@@ -52,9 +140,11 @@ const SizeBar = styled.ul`
 
 const SizeBarItem = styled.li`
   padding: .1rem;
-  color: ${({ available }) => available ? 'black' : 'gray'};
-  border: 1px solid rgba(0, 0, 0, .1);
   text-decoration: ${({ available }) => !available && 'line-through'};
+  user-select: none;
+  color: ${({ available }) => available ? 'black' : 'gray'};
+  cursor: ${({ available }) => available ? 'pointer' : 'not-allowed'}; 
+  border: ${({ selected }) => selected ? '1px solid red' : '1px solid rgba(0, 0, 0, .1)' } ;
 `
 
 const PriceContainer = styled.div`
@@ -73,13 +163,16 @@ const CartButton = styled.button`
   all: unset; /* problems in  SAFARI / IE browsers. just a commodity. */
   width: 100%;
   height: 24px;
-  background-color: chartreuse;
+  margin: .33rem 0;
   text-align: center;
-  border-radius: 4px;
-  transition: background-color .33s ease-in-out;
+  text-align: center;
   font-weight: bolder;
-  color: white;
   user-select: none;
+  color: white;
+  border-radius: 4px;
+  background-color: chartreuse;
+  cursor: pointer;
+  transition: background-color .33s ease-in-out;
 
   &:active {
     background-color: rgba(0, 255, 0, .5);
@@ -88,47 +181,6 @@ const CartButton = styled.button`
   }
 `
 
-const placeholderImage = 'https://placekitten.com/g/470/594'
-export default class Product extends Component {
-  render() {
-    return (
-      <ProductContainer discount={parseInt(this.props.discount_percentage)}>
-        <ProductImage src={this.validateImage(this.props.image) ? this.props.image : placeholderImage} alt={this.props.name} />
-        <ProductName>{this.props.name}</ProductName>
-        <Sizes {...this.props} />
-        <Prices {...this.props} />
-        <CartButton>add to cart</CartButton>
-      </ProductContainer>
-    )
-  }
+const mapDispatchToProps = { addToCart }
 
-  validateImage = url => {
-    return url.match(/^https?:\/\//) !== null
-  }
-}
-
-const Sizes = props => (
-  <SizeBar sizes={props.sizes}>
-    {
-      props.sizes.map(s => (
-        <SizeBarItem key={s.sku} {...s}>
-          {s.size}
-        </SizeBarItem>
-      ))
-    }
-  </SizeBar>
-)
-
-const Prices = props => (
-  <PriceContainer>
-    <PriceText sale={props.on_sale}>
-      {props.regular_price}
-    </PriceText>
-    {
-      props.on_sale &&
-      <PriceText bold={true}>
-        {props.actual_price}
-      </PriceText>
-    }
-  </PriceContainer>
-)
+export default connect(null, mapDispatchToProps)(Product);

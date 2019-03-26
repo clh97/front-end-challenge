@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react';
+import redux from '../redux';
 
 import Header from '../components/Header'
 import Nav from '../components/Nav'
@@ -15,15 +17,10 @@ const StoreFront = () => (
   </React.Fragment>
 )
 
-class Home extends Component {
-  render() {
-    return (
-      <Main children={
-        <StoreFront />
-      } />
-    )
-  }
-}
-
-
-export default Home;
+export default () => (
+  <Provider store={redux.store}>
+    <PersistGate loading={null} persistor={redux.persistor}>
+      <Main children={ <StoreFront /> } />
+    </PersistGate>
+  </Provider>
+);

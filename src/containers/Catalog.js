@@ -44,7 +44,7 @@ export default class Catalog extends Component {
 
         products.length <= 0 ?
           this.setState({ error: 'There are no products here.' }) :
-          this.setState({ products, loading: false }, () => console.log(products))
+          this.setState({ products, loading: false })
       })
       .catch(error => {
         this.setState({
@@ -68,7 +68,7 @@ export default class Catalog extends Component {
       <CatalogContainer>
         {
           // obs: not proud of using index as key, but I really hate warnings..
-          products.map((product, index) => <Product key={index} {...product} />)
+          products.map((product, index) => <Product key={index} product={product} />)
         }
       </CatalogContainer>
     )
